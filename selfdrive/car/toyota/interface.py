@@ -23,6 +23,17 @@ class CarInterface(CarInterfaceBase):
     ret.steerActuatorDelay = 0.12  # Default delay, Prius has larger delay
     ret.steerLimitTimer = 0.4
 
+    # Improved longitudinal tune
+    ret.longitudinalTuning.deadzoneBP = [0., 8.05]
+    ret.longitudinalTuning.deadzoneV = [.0, .14]
+    ret.longitudinalTuning.kpBP = [0., 5., 20.]
+    ret.longitudinalTuning.kpV = [1.3, 1.0, 0.7]
+    ret.longitudinalTuning.kiBP = [0., 5., 12., 20., 27.]
+    ret.longitudinalTuning.kiV = [.35, .23, .20, .17, .1]
+    ret.stoppingBrakeRate = 0.1 # reach stopping target smoothly
+    ret.startingBrakeRate = 2.0 # release brakes fast
+    ret.startAccel = 1.2 # Accelerate from 0 faster
+
     if candidate not in [CAR.PRIUS, CAR.RAV4, CAR.RAV4H]:  # These cars use LQR/INDI
       ret.lateralTuning.init('pid')
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
